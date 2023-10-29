@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/12week
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=abcd1234
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_DATABASE=postgresql
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_JDBC_CORE=DEBUG
+
+  db:
+    image: postgres:15
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=12week
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=abcd1234
